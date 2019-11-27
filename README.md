@@ -1,5 +1,13 @@
 # Cairo-Timer
 
+源码地址：https://github.com/eexpress/bin/blob/master/cairo-timer/timer.vala
+
+编译命令：`valac --pkg gtk+-3.0 -X -lm timer.vala`
+
+喜欢自己动手的，自己编译。
+
+---
+
 集合`定时器`和`闹钟⏰`功能。
 > 以前经常使用at脚本设置提醒，每次还要开终端，输入命令。这个单一执行文件，可以解决一般性的定时问题。
 > 比如："*12分钟后提醒*"；"*5点45提醒*"。都是鼠标在同一界面操作。
