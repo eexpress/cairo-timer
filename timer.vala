@@ -1,5 +1,5 @@
-//!valac --pkg gtk+-3.0 -X -lm %
-//!./%< &
+//!valac --pkg gtk+-3.0 -X -lm %f
+//#!./% &
 using Gtk;
 using Cairo;
 	
@@ -191,7 +191,8 @@ draw_line(ctx, "#F1F1F1", size/50, Dalarm*(Math.PI/180),-(int)(size/4),true);	//
 		if(d<size/20){	//圆心之内
 			if(e.button == 1){
 	alarm_alpha=alarm_alpha==alarm_false?alarm_true:alarm_false;
-				if(alarm_alpha==alarm_true) set_keep_above(false);
+//				if(alarm_alpha==alarm_true) set_keep_above(false);
+				set_keep_above(false);
 				queue_draw();}
 			else Gtk.main_quit();
 			return true;
