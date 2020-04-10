@@ -77,7 +77,11 @@ add_events (Gdk.EventMask.BUTTON_PRESS_MASK|Gdk.EventMask.SCROLL_MASK);
 				string exec=GLib.Environment.get_home_dir()+"/.config/time.script";
 				try {
 					File f = File.new_for_path(exec);
-					if(! f.query_exists()){exec = "/usr/bin/canberra-gtk-play -l 5 -i complete";}
+					if(! f.query_exists()){
+						f = File.new_for_path("/usr/bin/canberra-gtk-play");
+						if(! f.query_exists()){exec = "/usr/bin/paplay /usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga";}
+						else{exec = "/usr/bin/canberra-gtk-play -l 5 -i complete";}
+					}
 					Process.spawn_command_line_async(exec);
 				} catch (SpawnError e) { print ("Error: %s\n", e.message); }
 			}
