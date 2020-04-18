@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Cairo Timer
+Name[zh_CN]=定时器和闹钟
+Comment=Timer and Alarm
+Comment[zh_CN]=集合定时器和闹钟⏰功能
+Categories=Office;
+Exec=com.github.eexpress.cairo-timer
+Icon=timer.png
+Terminal=false
+Type=Application
+Keywords=Timer;Alarm;

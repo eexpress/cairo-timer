@@ -14,6 +14,16 @@
 
 GPL3 授权。gtk+-3.0下编译的，源码在其他仓库。当前Linux发行版本应该通用。其他平台不知道安装了gtk环境能跑不。
 
+## 应用场景
+
+- 闹钟：**启动**软件，鼠标**右键点击**钟表的表面，设定好闹铃时间，点击圆心**开启**闹钟，滚轮缩小钟面或者直接去做自己的事情。
+
+- 定时：**启动**软件，在圆心部分，**滚轮向上**增加定时的分钟，击圆心开启**激活**定时，做其他事情去。
+
+- Alarm: **start** software, **right click** the surface of clock, set the alarm time, click the center to **start**, scroll wheel to reduce the clock face or do your own things directly.
+
+- Timer: **start** software. In the center part, **roll up** to increase timing minutes. Click the center to **activate**, finish.
+
 ## 鼠标操作
 
 ![老界面](shot0.png) ![新界面](shot1.png)
@@ -28,7 +38,7 @@ GPL3 授权。gtk+-3.0下编译的，源码在其他仓库。当前Linux发行�
     * 其他鼠标按钮，`点选定时`，以五分钟为间隔。
 
 ## 提醒动作
-* 缺省执行`/usr/bin/canberra-gtk-play -l 5 -i complete`，就是系统声音，连续响5次。如果不关闭提醒，大约会响一分钟。
+* 缺省执行`/usr/bin/canberra-gtk-play -l 5 -i complete`，就是系统声音，连续响5次。如果不关闭提醒，大约会响一分钟。在某些没有这命令的系统上，会执行`/usr/bin/paplay /usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga`来提醒。
 * 如果有自定义脚本，`~/.config/time.script`，提醒动作就会执行它。不管shell格式。最好别设置`totem xxxx.mkv`这样的，软件会多次载入的，除非脚本里面自己搞定重载判断。因为提醒脚本是为了让人在没取消前，多次提醒。
 
 ## 新增参数
