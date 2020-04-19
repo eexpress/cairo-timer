@@ -192,10 +192,10 @@ draw_line(ctx, "#F1F1F1", size/50, Dalarm*(Math.PI/180),-(int)(size/4),true);	//
 		if(d<size/20){	//圆心之内
 			if(e.button == 1){
 	alarm_alpha=alarm_alpha==alarm_false?alarm_true:alarm_false;
-	var notification = new Notification (("Timer"));
+//~ 	var nf = new Notification (("Timer"));
+//~ 	nf.set_body (("Active!"));
+//~ 	this.send_notification ("com.github.eexpress.cairo-timer", nf);
 	if(alarm_alpha==alarm_true){
-		notification.set_body (("Active!"));
-//~ 		this.send_notification ("com.github.eexpress.cairo-timer", notification);
 		}
 //				if(alarm_alpha==alarm_true) set_keep_above(false);
 				set_keep_above(false);
@@ -225,8 +225,8 @@ begin_move_drag ((int)e.button, (int)e.x_root, (int)e.y_root, e.time);
 			if(d<size/20){timespan++;change_from_current_time();}	//圆心位置
 			else if(size<400)size+=50;	//钟面位置
 		}
-		if(e.direction==Gdk.ScrollDirection.DOWN){
-			if(d<size/20){timespan--;change_from_current_time();}
+		if(e.direction==Gdk.ScrollDirection.DOWN){	//滚轮向下减小，不低于0。
+			if(d<size/20){if(timespan>0){timespan--;};change_from_current_time();}
 			else if(size>100)size-=50;
 		}
 		set_size_request(size,size);
