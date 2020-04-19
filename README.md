@@ -20,7 +20,7 @@ GPL3 授权。gtk+-3.0下编译的，源码在其他仓库。当前Linux发行�
 
 - 定时：**启动**软件，在圆心部分，**滚轮向上**增加定时的分钟，击圆心开启**激活**定时，做其他事情去。
 
-- Alarm: **start** software, **right click** the surface of clock, set the alarm time, click the center to **start**, scroll wheel to reduce the clock face or do your own things directly.
+- Alarm: **start** software, **right click** the surface of clock, set the alarm time, click the center to **activate**, scroll wheel to reduce the clock face or do your own things directly.
 
 - Timer: **start** software. In the center part, **roll up** to increase timing minutes. Click the center to **activate**, finish.
 
