@@ -38,7 +38,8 @@ public class Timer : Gtk.Window {
 	int th=0; int tm=0;
 	int h; int m;
 	double Dalarm=0;
-	const string alarm_color="#57C575";
+	const string alarm_color="#57C575";	// TODO: 可以设置成一个数组，按照日期/星期循环换颜色。
+//~ 	int cindex;		// 使用这个计算，然后对 alarm_color 取模，作为数组索引。
 	const string hand_color="#F1F1F1";
 	const string back_color="#4E4E4E";
 /*    const string center_color="#C02C3F";*/
@@ -192,9 +193,14 @@ draw_line(ctx, "#F1F1F1", size/50, Dalarm*(Math.PI/180),-(int)(size/4),true);	//
 		if(d<size/20){	//圆心之内
 			if(e.button == 1){
 	alarm_alpha=alarm_alpha==alarm_false?alarm_true:alarm_false;
+//~ 	CAUTION：似乎不同的系统，提示方式都不兼容。可能使用 libnotify 或者 dbus 能通用点？
 //~ 	var nf = new Notification (("Timer"));
 //~ 	nf.set_body (("Active!"));
 //~ 	this.send_notification ("com.github.eexpress.cairo-timer", nf);
+//~ 	error: The name `send_notification' does not exist in the context of `Timer'
+//~ 	this.send_notification ("com.github.eexpress.cairo-timer", nf);
+//~ 	^^^^^^^^^^^^^^^^^^^^^^
+
 	if(alarm_alpha==alarm_true){
 		}
 //				if(alarm_alpha==alarm_true) set_keep_above(false);
@@ -204,6 +210,7 @@ draw_line(ctx, "#F1F1F1", size/50, Dalarm*(Math.PI/180),-(int)(size/4),true);	//
 			return true;
 		}
 		timespan=0;
+		// CAUTION：不使用1键点击设置定时，是为了避免在拖动时，误触发。
 		if(e.button == 1){	//圆心之外
 begin_move_drag ((int)e.button, (int)e.x_root, (int)e.y_root, e.time);
 		} else {

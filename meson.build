@@ -10,8 +10,9 @@ executable(
 	dependencies: [
 		dependency('gtk+-3.0')
 	],
-	link_args : '-X',
-	link_args : '-lm',
+#	link_args : '-X',
+#	link_args : '-lm',
+	link_args : ['-X', '-lm',],
 	install: true
 )
 
