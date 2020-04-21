@@ -4,13 +4,13 @@ Priority: extra
 Maintainer: eexpss <eexpss@gmail.com>
 Build-Depends: debhelper (>= 9),
                meson,
+               valac (>= 0.40.0),
                libgtk-3-dev,
-               libcairo2 (>= 1.1),
-               valac (>= 0.40.0)
+               libcairo2
 Standards-Version: 1.0.0
 
 Package: com.github.eexpress.cairo-timer
-Architecture: amd64
+Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Cairo-Timer
   A simple standalone Timer and Alarm clock.
