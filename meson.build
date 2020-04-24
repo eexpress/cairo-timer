@@ -1,5 +1,5 @@
 
-project('com.github.eexpress.cairo-timer', 'vala', 'c', version : '1.0.8', license: 'GPL-3.0')
+project('com.github.eexpress.cairo-timer', 'vala', 'c')
 
 # i18n = import('i18n')
 # add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format (meson.project_name()), language:'c')
