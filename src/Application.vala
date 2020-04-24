@@ -4,6 +4,12 @@ using Gtk;
 using Cairo;
 
 //--------------------------------------------------------
+/*
+圆心：鼠标1键开关定时，其他键退出。
+其他：鼠标1键拖动，其他键选择定时。
+滚轮：切换显示大小
+*/
+//--------------------------------------------------------
 public class swing {
 	const double cos_a[]={0.2588,0.5,0.7071,0.866,0.966,1,  1,0.966,0.866,0.7071,0.5,0.2588};	//cos 0-75,+15
 	int cnt;	//012345(1) 543210(-1) 012345(-1) 543210(1)
@@ -27,12 +33,6 @@ public class swing {
 //---------------------
 }
 //--------------------------------------------------------
-/*
-圆心：鼠标1键开关定时，其他键退出。
-其他：鼠标1键拖动，其他键选择定时。
-滚轮：切换显示大小
-*/
-//--------------------------------------------------------
 public class Timer : Gtk.Window {
 	int size=400;
 	int th=0; int tm=0;
@@ -50,18 +50,21 @@ public class Timer : Gtk.Window {
 	int timespan=0;	//alarm和time的分钟差距。
 	DateTime now;
 	Gdk.RGBA cc;
+	swing sss;
+	string instr;
+	string showtext="";
 /*    string svg="<可以embed svg，需要将\"替换成'>";*/
 /*        handle = new Rsvg.Handle.from_data(svg.data);*/
 //----------------------------
-	public Timer(string instr) {
+	public Timer(string inputstr) {
+		instr = inputstr;
 		cc=Gdk.RGBA();
-		string showtext="";
 		title = "Timer";
 		decorated = false;
 		app_paintable = true;
 		set_visual(this.get_screen().get_rgba_visual());
 		set_size_request(size,size);
-		var sss=new swing(); sss.init();
+		sss=new swing(); sss.init();
 		destroy.connect (Gtk.main_quit);
 add_events (Gdk.EventMask.BUTTON_PRESS_MASK|Gdk.EventMask.SCROLL_MASK);
 
@@ -88,7 +91,68 @@ add_events (Gdk.EventMask.BUTTON_PRESS_MASK|Gdk.EventMask.SCROLL_MASK);
 			}
 			return true;});
 
-		draw.connect ((da,ctx) => {
+//~ 		draw.connect ((da,ctx) => {
+//~ 		});
+		draw.connect (on_draw);
+//----------鼠标点击事件。
+	button_press_event.connect ((e) => {
+		int x; int y;
+		x=(int)(e.x-size/2); y=(int)(e.y-size/2);
+		int d=(int)Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+		if(d<size/20){	//圆心之内
+			if(e.button == 1){
+	alarm_alpha=alarm_alpha==alarm_false?alarm_true:alarm_false;
+//~ 	CAUTION：似乎不同的系统，提示方式都不兼容。可能使用 libnotify 或者 dbus 能通用点？
+//~ 	var nf = new Notification (("Timer"));
+//~ 	nf.set_body (("Active!"));
+//~ 	this.send_notification ("com.github.eexpress.cairo-timer", nf);
+//~ 	error: The name `send_notification' does not exist in the context of `Timer'
+//~ 	this.send_notification ("com.github.eexpress.cairo-timer", nf);
+//~ 	^^^^^^^^^^^^^^^^^^^^^^
+
+	if(alarm_alpha==alarm_true){
+		}
+//				if(alarm_alpha==alarm_true) set_keep_above(false);
+				set_keep_above(false);
+//~ 	screenshot();
+				queue_draw();}
+			else Gtk.main_quit();
+			return true;
+		}
+		timespan=0;
+		// CAUTION：不使用1键点击设置定时，是为了避免在拖动时，误触发。
+		if(e.button == 1){	//圆心之外
+begin_move_drag ((int)e.button, (int)e.x_root, (int)e.y_root, e.time);
+		} else {
+			Dalarm=Math.atan2(y, x)/(Math.PI/180)+90;
+			if(Dalarm<0)Dalarm+=360;	//修正成向上为0度。
+			th=(int)(Dalarm/30);	//30度1小时
+			tm=(int)((Dalarm-th*30)/30*60);
+			tm=tm/5*5;		//调整成5分钟一格
+			queue_draw();
+		}
+		return true;
+	});
+//------------鼠标滚轮事件
+	scroll_event.connect ((e) => {
+		int x; int y;
+		x=(int)(e.x-size/2); y=(int)(e.y-size/2);
+		int d=(int)Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+		if(e.direction==Gdk.ScrollDirection.UP){
+			if(d<size/20){timespan++;change_from_current_time();}	//圆心位置
+			else if(size<400)size+=50;	//钟面位置
+		}
+		if(e.direction==Gdk.ScrollDirection.DOWN){	//滚轮向下减小，不低于0。
+			if(d<size/20){if(timespan>0){timespan--;};change_from_current_time();}
+			else if(size>100)size-=50;
+		}
+		set_size_request(size,size);
+		return true;
+	});
+	//---------------------
+}
+//---------------------
+	private bool on_draw (Context ctx) {
 			Cairo.TextExtents ex;
 			ctx.set_font_size(size/12);
 			ctx.translate(size/2, size/2);	//窗口中心为坐标原点。
@@ -184,63 +248,8 @@ draw_line(ctx, "#F1F1F1", size/50, Dalarm*(Math.PI/180),-(int)(size/4),true);	//
 			ctx.arc(0,0,size/40,0,2*Math.PI);
 			ctx.fill();
 			return true;
-		});
-//----------鼠标点击事件。
-	button_press_event.connect ((e) => {
-		int x; int y;
-		x=(int)(e.x-size/2); y=(int)(e.y-size/2);
-		int d=(int)Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
-		if(d<size/20){	//圆心之内
-			if(e.button == 1){
-	alarm_alpha=alarm_alpha==alarm_false?alarm_true:alarm_false;
-//~ 	CAUTION：似乎不同的系统，提示方式都不兼容。可能使用 libnotify 或者 dbus 能通用点？
-//~ 	var nf = new Notification (("Timer"));
-//~ 	nf.set_body (("Active!"));
-//~ 	this.send_notification ("com.github.eexpress.cairo-timer", nf);
-//~ 	error: The name `send_notification' does not exist in the context of `Timer'
-//~ 	this.send_notification ("com.github.eexpress.cairo-timer", nf);
-//~ 	^^^^^^^^^^^^^^^^^^^^^^
 
-	if(alarm_alpha==alarm_true){
-		}
-//				if(alarm_alpha==alarm_true) set_keep_above(false);
-				set_keep_above(false);
-				queue_draw();}
-			else Gtk.main_quit();
-			return true;
-		}
-		timespan=0;
-		// CAUTION：不使用1键点击设置定时，是为了避免在拖动时，误触发。
-		if(e.button == 1){	//圆心之外
-begin_move_drag ((int)e.button, (int)e.x_root, (int)e.y_root, e.time);
-		} else {
-			Dalarm=Math.atan2(y, x)/(Math.PI/180)+90;
-			if(Dalarm<0)Dalarm+=360;	//修正成向上为0度。
-			th=(int)(Dalarm/30);	//30度1小时
-			tm=(int)((Dalarm-th*30)/30*60);
-			tm=tm/5*5;		//调整成5分钟一格
-			queue_draw();
-		}
-		return true;
-	});
-//------------鼠标滚轮事件
-	scroll_event.connect ((e) => {
-		int x; int y;
-		x=(int)(e.x-size/2); y=(int)(e.y-size/2);
-		int d=(int)Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
-		if(e.direction==Gdk.ScrollDirection.UP){
-			if(d<size/20){timespan++;change_from_current_time();}	//圆心位置
-			else if(size<400)size+=50;	//钟面位置
-		}
-		if(e.direction==Gdk.ScrollDirection.DOWN){	//滚轮向下减小，不低于0。
-			if(d<size/20){if(timespan>0){timespan--;};change_from_current_time();}
-			else if(size>100)size-=50;
-		}
-		set_size_request(size,size);
-		return true;
-	});
-	//---------------------
-}
+	}
 //---------------------
 	void draw_line(Cairo.Context ctx, string color, int width, double angle, int len, bool dot){
 		ctx.save();
@@ -270,6 +279,20 @@ begin_move_drag ((int)e.button, (int)e.x_root, (int)e.y_root, e.time);
 		th%=12;
 		Dalarm=th*30+tm/2;
 		queue_draw();
+	}
+//---------------------
+	private void screenshot(){
+//~ 		var surface = new SvgSurface(Environment.get_variable("HOME")+"/cairo-timer.svg", size, size);
+//~ 		var ctx = new Cairo.Context (surface);
+//~ 		on_draw(ctx);	//假的SVG，内嵌图片
+//---------------------
+		var surface = new ImageSurface (Format.ARGB32, size, size);
+		var ctx = new Cairo.Context (surface);
+		on_draw(ctx);
+		surface.write_to_png (Environment.get_variable("HOME")+"/cairo-timer.png");
+//~ 		var surface = new PdfSurface(Environment.get_variable("HOME")+"/cairo-timer.pdf", size, size);
+//~ 		var ctx = new Cairo.Context (surface);
+//~ 		on_draw(ctx);
 	}
 //---------------------
 }
