@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2020 Eexpress <[eexpss@gmail.com]> -->
+<component type="desktop">
+	<id>com.github.eexpress.cairo-timer</id>
+	<metadata_license>CC0</metadata_license>
+	<name>Cairo Timer</name>
+	<summary>Timer and Alarm</summary>
+	<description>
+		<p>A simple standalone Timer and Alarm. </p>
+		<p>1. Set time</p>
+		<p>right click on the surface of clock, set the alarm time.</p>
+		<p>In the center part, roll up to increase timing minutes.</p>
+		<p>2. Start</p>
+		<p>Click the center to activate.</p>
+		<p>Right click the center to exit.</p>
+	</description>
+	<screenshots>
+		<screenshot type="default">
+		<image>https://raw.githubusercontent.com/eexpress/cairo-timer/master/Screenshot.png</image>
+		</screenshot>
+		<screenshot type="default">
+		<image>https://raw.githubusercontent.com/eexpress/cairo-timer/master/Screenshot0.png</image>
+		</screenshot>
+	</screenshots>
+	<developer_name>eexpress</developer_name>
+	<url type="homepage">https://github.com/eexpress/cairo-timer</url>
+	<url type="bugtracker">https://github.com/eexpress/cairo-timer/issues</url>
+	<url type="help">https://github.com/eexpress/cairo-timer</url>
+	<update_contact>eexpss@gmail.com</update_contact>
+  	<custom>
+		 <value key="x-appcenter-color-primary">#3CB64A</value>
+		 <value key="x-appcenter-color-primary-text">#DEFFDE</value>
+		 <value key="x-appcenter-suggested-price">2</value>
+	</custom>
+</component>
