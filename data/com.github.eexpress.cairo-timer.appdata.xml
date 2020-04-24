@@ -22,7 +22,12 @@
 		<image>https://raw.githubusercontent.com/eexpress/cairo-timer/master/Screenshot0.png</image>
 		</screenshot>
 	</screenshots>
-	<custom>
+	<developer_name>eexpress</developer_name>
+	<url type="homepage">https://github.com/eexpress/cairo-timer</url>
+	<url type="bugtracker">https://github.com/eexpress/cairo-timer/issues</url>
+	<url type="help">https://github.com/eexpress/cairo-timer</url>
+	<update_contact>eexpss@gmail.com</update_contact>
+  	<custom>
 		 <value key="x-appcenter-color-primary">#3CB64A</value>
 		 <value key="x-appcenter-color-primary-text">#DEFFDE</value>
 		 <value key="x-appcenter-suggested-price">2</value>
