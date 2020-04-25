@@ -1,10 +1,19 @@
 # Cairo-Timer
 
-源码地址：https://github.com/eexpress/bin/blob/master/cairo-timer/timer.vala
+## 安装
 
-编译命令：`valac --pkg gtk+-3.0 -X -lm timer.vala`
+- 喜欢自己动手的，自己**编译**。编译命令：
 
-喜欢自己动手的，自己编译。
+```
+cd bin.old;   valac --pkg gtk+-3.0 -X -lm timer.vala
+```
+
+- 或者，使用meson+ninja**编译和安装**：
+
+```
+meson build --prefix=/usr;    cd build;    sudo ninja install;
+```
+- 或者，直接**安装**  `Cairo-Timer-1.0.deb` 。
 
 ---
 
@@ -48,3 +57,4 @@ GPL3 授权。gtk+-3.0下编译的，源码在其他仓库。当前Linux发行�
 > 软件10秒激活一次，所以最大延时误差是10秒。
 
 >虽然界面丑点，其实只是为了不调用任何外部资源。
+
