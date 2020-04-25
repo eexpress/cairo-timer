@@ -35,7 +35,7 @@ GPL3 授权。gtk+-3.0下编译的，源码在其他仓库。当前Linux发行�
 
 ## 鼠标操作
 
-![老界面](Screenshot0.png) ![新界面](Screenshot.png)
+![老界面](Screenshot0.png) ![新界面](Screenshot1.png)
 
 * 圆心部分：
     * `1`鼠标主键切换提醒`开关`，时间文字和定时指针会变颜色，指示开关的状态。
