@@ -11,7 +11,7 @@ cd bin.old;   valac --pkg gtk+-3.0 -X -lm --pkg libcanberra timer.vala
 - 或者，使用meson+ninja**编译和安装**：
 
 ```
-meson build --prefix=/usr;    cd build;    sudo ninja install;
+meson --reconfigure build --prefix=/usr;    cd build;    sudo ninja install;
 ```
 - 或者，直接**安装**  `Cairo-Timer-1.0.deb` 。
 
@@ -47,7 +47,8 @@ GPL3 授权。gtk+-3.0下编译的，源码在其他仓库。当前Linux发行�
     * 其他鼠标按钮，`点选定时`，以五分钟为间隔。
 
 ## 提醒动作
-* 缺省执行`/usr/bin/canberra-gtk-play -l 5 -i complete`，就是系统声音，连续响5次。如果不关闭提醒，大约会响一分钟。在某些没有这命令的系统上，会执行`/usr/bin/paplay /usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga`来提醒。
+* ~~缺省执行`/usr/bin/canberra-gtk-play -l 5 -i complete`，就是系统声音，连续响5次。如果不关闭提醒，大约会响一分钟。在某些没有这命令的系统上，会执行`/usr/bin/paplay /usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga`来提醒。~~
+* 默认使用libcanberra播放系统声音complete。如果不关闭提醒，大约会响一分钟。
 * 如果有自定义脚本，`~/.config/time.script`，提醒动作就会执行它。不管shell格式。最好别设置`totem xxxx.mkv`这样的，软件会多次载入的，除非脚本里面自己搞定重载判断。因为提醒脚本是为了让人在没取消前，多次提醒。
 
 ## 新增参数
