@@ -1,4 +1,5 @@
-//!valac --pkg gtk+-3.0 -X -lm %f
+//!valac --pkg gtk+-3.0 -X -lm --pkg libcanberra %f
+//~ ⭕ pi libcanberra-dev
 //#!./% &
 using Gtk;
 using Cairo;
@@ -82,11 +83,11 @@ add_events (Gdk.EventMask.BUTTON_PRESS_MASK|Gdk.EventMask.SCROLL_MASK);
 				try {
 					File f = File.new_for_path(exec);
 					if(! f.query_exists()){
-						f = File.new_for_path("/usr/bin/canberra-gtk-play");
-						if(! f.query_exists()){exec = "/usr/bin/paplay /usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga";}
-						else{exec = "/usr/bin/canberra-gtk-play -l 5 -i complete";}
-					}
-					Process.spawn_command_line_async(exec);
+						Canberra.Context sound;
+						Canberra.Context.create(out sound);
+						sound.play (0, Canberra.PROP_EVENT_ID, "complete", Canberra.PROP_EVENT_DESCRIPTION, "Timer");
+						Thread.usleep (2000000);
+					} else {Process.spawn_command_line_async(exec);}
 				} catch (SpawnError e) { print ("Error: %s\n", e.message); }
 			}
 			return true;});

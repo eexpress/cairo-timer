@@ -9,7 +9,8 @@ executable(
 	'src/Application.vala',
 	dependencies: [
 		dependency('gtk+-3.0'),
-		dependency('cairo')
+		dependency('cairo'),
+		dependency('libcanberra')
 	],
 #	link_args : '-X',
 #	link_args : '-lm',

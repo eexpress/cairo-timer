@@ -2,10 +2,10 @@
 
 ## 安装
 
-- 喜欢自己动手的，自己**编译**。编译命令：
+- 喜欢自己动手的，自己**编译**。需要安装libcanberra-dev库，编译命令：
 
 ```
-cd bin.old;   valac --pkg gtk+-3.0 -X -lm timer.vala
+cd bin.old;   valac --pkg gtk+-3.0 -X -lm --pkg libcanberra timer.vala
 ```
 
 - 或者，使用meson+ninja**编译和安装**：
