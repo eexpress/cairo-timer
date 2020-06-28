@@ -125,6 +125,7 @@ add_events (Gdk.EventMask.BUTTON_PRESS_MASK|Gdk.EventMask.SCROLL_MASK);
 		if(e.button == 1){	//圆心之外
 begin_move_drag ((int)e.button, (int)e.x_root, (int)e.y_root, e.time);
 		} else {
+			if(alarm_alpha==alarm_true) return true;	//启动后，不能再修改定时。
 			Dalarm=Math.atan2(y, x)/(Math.PI/180)+90;
 			if(Dalarm<0)Dalarm+=360;	//修正成向上为0度。
 			th=(int)(Dalarm/30);	//30度1小时
@@ -139,6 +140,7 @@ begin_move_drag ((int)e.button, (int)e.x_root, (int)e.y_root, e.time);
 		int x; int y;
 		x=(int)(e.x-size/2); y=(int)(e.y-size/2);
 		int d=(int)Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+		if(d<size/20 && alarm_alpha==alarm_true) return true;	//启动后，不能再修改定时。
 		if(e.direction==Gdk.ScrollDirection.UP){
 			if(d<size/20){timespan++;change_from_current_time();}	//圆心位置
 			else if(size<400)size+=50;	//钟面位置
@@ -183,7 +185,7 @@ begin_move_drag ((int)e.button, (int)e.x_root, (int)e.y_root, e.time);
 			ctx.set_line_width (size/19);
 			ctx.arc(0,0,size/2.33,0,2*Math.PI);
 			ctx.stroke();
-//---------------------graduation
+//---------------------graduation 刻度
 			for(int i=0;i<12;i++){
 				ctx.set_line_width (size/20);
 				ctx.save();
@@ -210,16 +212,25 @@ begin_move_drag ((int)e.button, (int)e.x_root, (int)e.y_root, e.time);
 				cc.parse(alarm_color);
 				ctx.set_source_rgba (cc.red, cc.green, cc.blue, alarm_alpha);
 			}
-			showtext="%02d:%02d".printf(th,tm);
-			ctx.text_extents (showtext, out ex);
-			ctx.move_to(-ex.width/2,ex.height*4);
-			ctx.show_text(showtext);
 			if(timespan>0){
+//---------------------增加一个扇形延时显示
+				ctx.save();
+				ctx.set_source_rgba (1, 0, 0, 0.5);
+				ctx.rotate(-Math.PI/2);
+				ctx.move_to(0,0);
+				ctx.arc(0,0,size/2-size/9,0,timespan*Math.PI/30);
+				ctx.fill();
+				ctx.restore();
+//---------------------
 				showtext="+"+timespan.to_string();
 				ctx.text_extents (showtext, out ex);
 				ctx.move_to(-ex.width/2,ex.height*5.5);
 				ctx.show_text(showtext);
 			}
+			showtext="%02d:%02d".printf(th,tm);
+			ctx.text_extents (showtext, out ex);
+			ctx.move_to(-ex.width/2,ex.height*4);
+			ctx.show_text(showtext);
 //---------------------clock text
 			ctx.set_source_rgba (0, 0, 0, 1);
 			now = new DateTime.now_local ();
