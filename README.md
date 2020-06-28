@@ -11,9 +11,9 @@ cd bin.old;   valac --pkg gtk+-3.0 -X -lm --pkg libcanberra timer.vala
 - 或者，使用meson+ninja**编译和安装**：
 
 ```
-meson --reconfigure build --prefix=/usr;    cd build;    sudo ninja install;
+meson --reconfigure build --prefix=/usr;    cd build;    ninja;   sudo ninja install;
 ```
-- 或者，直接**安装**  `Cairo-Timer-1.0.deb` 。
+- 或者，直接**安装**  `Cairo-Timer-1.1.deb` 。
 
 ---
 
@@ -21,7 +21,7 @@ meson --reconfigure build --prefix=/usr;    cd build;    sudo ninja install;
 > 以前经常使用at脚本设置提醒，每次还要开终端，输入命令。这个单一执行文件，可以解决一般性的定时问题。
 > 比如："*12分钟后提醒*"；"*5点45提醒*"。都是鼠标在同一界面操作。
 
-GPL3 授权。gtk+-3.0下编译的，源码在其他仓库。当前Linux发行版本应该通用。其他平台不知道安装了gtk环境能跑不。
+GPL3 授权。gtk+-3.0下编译的，源码在src。当前Linux发行版本应该通用。其他平台不知道安装了gtk环境能跑不。
 
 ## 应用场景
 
@@ -57,5 +57,5 @@ GPL3 授权。gtk+-3.0下编译的，源码在其他仓库。当前Linux发行�
 
 > 软件10秒激活一次，所以最大延时误差是10秒。
 
->虽然界面丑点，其实只是为了不调用任何外部资源。
+>不调用任何外部资源。
 
