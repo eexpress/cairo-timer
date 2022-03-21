@@ -1,9 +1,11 @@
 
 project('com.github.eexpress.cairo-timer', 'vala', 'c')
+# project指定项目名称及语言类型
 
 # i18n = import('i18n')
 # add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format (meson.project_name()), language:'c')
 
+# executable指定可执行文件名及源文件
 executable(
 	meson.project_name(),
 	'src/Application.vala',
